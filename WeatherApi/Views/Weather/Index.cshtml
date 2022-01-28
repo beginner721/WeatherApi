@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+
+<form method="post">
+    <div class="form-group">
+        <fieldset>
+
+            Şehir Seçim
+
+            <select id="Cities" name="city">
+                <option selected="selected" value=""></option>
+                <option value="2344116">İstanbul</option>
+                <option value="2344117">İzmir</option>
+                <option value="2343732">Ankara</option>
+                <option value="44418">Londra</option>
+                <option value="721943">Roma</option>
+                <option value="676757">Münih</option>
+                <option value="614274">Monako</option>
+                <option value="753692">Barselona</option>
+            </select>
+            <small>Tarihi boş bırakabilirsiniz.</small>
+            <input type="date" name="dateTime" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31">
+            <button type="submit">Getir</button>
+            @ViewBag.Error
+        </fieldset>
+    </div>
+</form>
+
+@if (ViewBag.Count > 1)
+{
+    <h3 style="text-align:center">Beş Günlük Hava Durumu</h3>
+    <hr />
+}
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Şehir</th>
+            <th>Tarih</th>
+            <th>Hava Sıcaklığı</th>
+        </tr>
+    </thead>
+    @if (ViewBag.Temps != null || ViewBag.Dates != null)
+    {
+        <tbody>
+            @for (int i = 0; i < ViewBag.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.City</td>
+                    <td>@ViewBag.Dates[i]</td>
+                    <td>@ViewBag.Temps[i].Substring(0, 3) °C</td>
+                </tr>
+            }
+
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td>@ViewBag.City </td>
+                <td>@ViewBag.Date </td>
+                <td>@ViewBag.Temp °C</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>
